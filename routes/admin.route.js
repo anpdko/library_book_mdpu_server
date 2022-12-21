@@ -2,19 +2,32 @@ require('dotenv').config()
 const {Router} = require('express')
 const router = Router()
 const Admin = require('../models/Admin.module')
-const {check, validationResult} = require('express-validator')
 const bcrypt = require('bcryptjs')
 const jwtToken = require('jsonwebtoken')
+const {verifyToken} = require('../middleware/admin.middleware')
+// const {check, validationResult} = require('express-validator')
 
-router.post('/registration', async (req, res) => {
-   const {login, password} = req.body
-   const hashedPassword = await bcrypt.hash(password, 12)
-   const admin = new Admin({
-      login, password: hashedPassword
+
+
+// router.post('/registration', async (req, res) => {
+//    const {login, password} = req.body
+//    const hashedPassword = await bcrypt.hash(password, 12)
+//    const admin = new Admin({
+//       login, password: hashedPassword
+//    })
+//    await admin.save()
+// })
+
+router.get('/', async (req, res) => {
+   Admin.find()
+   .then((admins) => {
+      return res.json(admins);
    })
-   await admin.save()
+   .catch((err) => {
+      console.log(err)
+      return res.status(400).json({ message: 'Администраторов не найдено' })
+   })
 })
-
 
 
 router.post('/login', async (req, res) => {
