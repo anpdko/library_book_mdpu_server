@@ -13,7 +13,7 @@ app.use(express.json({extensions: true})) //Для понимание серве
 app.use('/static/images', express.static(path.join(__dirname, 'static/images')))
 
 app.use('/', (req, res) => {
-   req.json({test: "Hello"})
+   req.send("Hello")
 })
 app.use('/api/admin', require('./routes/admin.route'))
 app.use('/api/books', require('./routes/books.route'))
