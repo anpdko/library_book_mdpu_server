@@ -12,9 +12,10 @@ app.use(cors({ origin: true, credentials: true })); // cors
 app.use(express.json({extensions: true})) //Для понимание сервером фаормата json
 app.use('/static/images', express.static(path.join(__dirname, 'static/images')))
 
-app.use('/', (req, res) => {
-   req.send("Hello")
+app.get('/', (req, res) => {
+   res.send("Server listening on port 5000");
 })
+
 app.use('/api/admin', require('./routes/admin.route'))
 app.use('/api/books', require('./routes/books.route'))
 app.use('/api/file', require('./routes/file.route'))
