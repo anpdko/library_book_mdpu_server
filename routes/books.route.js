@@ -15,10 +15,10 @@ setNewBook = (book) => {
       year: !!book?.year?book?.year:"не вказано", 
       pageCount: !!book?.pageCount?book?.pageCount:"не вказано",
       language: !!book?.language?book?.language:"українська",
-      // imgCover: !!book?.imgCover?book?.imgCover:'',
-      // fileBook: book.fileBook
-      imgCover: '12J1b4nOtFj1v2jf04artUt0mpmJGTrbl',
-      fileBook: '1zqmLe_SKfvLPKCWg-i33XZDRNCUsj6-l'
+      imgCover: !!book?.imgCover?book?.imgCover:'12J1b4nOtFj1v2jf04artUt0mpmJGTrbl',
+      fileBook: !!book?.fileBook?book?.fileBook:'',
+      // imgCover: '12J1b4nOtFj1v2jf04artUt0mpmJGTrbl',
+      // fileBook: '1zqmLe_SKfvLPKCWg-i33XZDRNCUsj6-l'
    }
 }
 

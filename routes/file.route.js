@@ -2,10 +2,26 @@ const express = require('express');
 const router = express.Router();
 const {verifyToken} = require('../middleware/admin.middleware')
 
+const {uploadImg, uploadFile} = require('../middleware/upload.middelware')
 
-router.post('/upload', (req, res) =>{
+
+const uploadBook = uploadFile.single('fileBook')
+router.post('/upload/file', uploadBook, (req, res) =>{
   try {
-    res.json(req.data)
+    console.log(req.file)
+    res.json({fileId: req.file.fileId})
+  }
+  catch(err){
+    res.status(400).json({ message: 'Не удалось загрузить обложку'})
+  }
+})
+
+
+const uploadCover = uploadImg.single('imgCover')
+router.post('/upload/img', uploadCover, (req, res) =>{
+  try {
+    console.log(req.file)
+    res.json({fileId: req.file.fileId})
   }
   catch(err){
     res.status(400).json({ message: 'Не удалось загрузить обложку'})
