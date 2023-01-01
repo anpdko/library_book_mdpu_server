@@ -74,7 +74,7 @@ router.put('/:id', verifyToken, (req, res) => {
 
 // DELETE api/books:id - Удалить книгу
 router.delete('/:id', (req, res) => {
-   Book.findByIdAndDelete(req.params.id)
+   Books.findByIdAndDelete(req.params.id)
    .then((book) => {
       res.json({message: "Книга удалена"})
    })

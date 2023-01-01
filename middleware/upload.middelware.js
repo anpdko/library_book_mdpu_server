@@ -1,11 +1,9 @@
 require('dotenv').config()
 const { google } = require('googleapis');
-const path = require('path');
 const utf8 = require('utf8');
 var multer = require('multer')
 var GoogleDriveStorage = require('multer-google-drive')
-const GOOGLE_PRIVATE_KEY = process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/gm, '\n')
-
+const GOOGLE_PRIVATE_KEY = process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/gm, '\n');
 
 const auth = new google.auth.GoogleAuth({
    credentials: {
@@ -41,7 +39,7 @@ const uploadFile = multer({
       parents: '1V6ySubgMzAvpS_IbhcpvevBKLj_SCnbE',
       fileName: function (req, file, cb) {
          if(typesFile.includes(file.mimetype)){
-            cb(null, "mdpu_"+utf8.decode(file.originalname))
+            cb(null, "mdpu_" + utf8.decode(file.originalname))
          }
          else {
             cb(null, false)

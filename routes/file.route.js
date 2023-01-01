@@ -20,7 +20,6 @@ router.post('/upload/file', uploadBook, (req, res) =>{
 const uploadCover = uploadImg.single('imgCover')
 router.post('/upload/img', uploadCover, (req, res) =>{
   try {
-    console.log(req.file)
     res.json({fileId: req.file.fileId})
   }
   catch(err){
