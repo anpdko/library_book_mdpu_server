@@ -4,29 +4,25 @@ const router = Router()
 const Books = require('../models/Books.module')
 const { verifyToken } = require('../middleware/admin.middleware');
 
-setNewBook = (book) => {
-   return {
-      title: !!book?.title?book?.title:"не вказано",
-      description: !!book?.description?book?.description:"не вказано",
-      author: !!book?.author?book?.author:"не вказано",
-      genre: !!book?.genre?.length?book?.genre:[],
-      category: !!book?.category?.length?book?.category:[],
-      publisher: !!book?.publisher?book?.publisher:"не вказано",
-      year: !!book?.year?book?.year:"не вказано", 
-      pageCount: !!book?.pageCount?book?.pageCount:"не вказано",
-      language: !!book?.language?book?.language:"українська",
-      imgCover: !!book?.imgCover?book?.imgCover:'12J1b4nOtFj1v2jf04artUt0mpmJGTrbl',
-      fileBook: !!book?.fileBook?book?.fileBook:'',
-      // imgCover: '12J1b4nOtFj1v2jf04artUt0mpmJGTrbl',
-      // fileBook: '1zqmLe_SKfvLPKCWg-i33XZDRNCUsj6-l'
-   }
-}
+const PAGE_SIZE = 5;
+
 
 // GET api/books - Получить все книги
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
+   const page = parseInt(req.query.page || '1') - 1
+   const totalPages = await Books.countDocuments({})
+
+   
    Books.find()
+   .limit(PAGE_SIZE)
+   .skip(PAGE_SIZE * page)
+   .sort({date:-1}) 
    .then((books) => {
-      return res.json(books);
+      return res.json({
+         page: page + 1,
+         totalPages: Math.ceil(totalPages / PAGE_SIZE),
+         books: books
+      });
    })
    .catch((err) => {
       console.log(err)
@@ -49,8 +45,7 @@ router.get('/:id', (req, res) => {
 
 // POST api/books - Загрузить книгу
 router.post('/', verifyToken, (req, res) =>{
-   const newBooks = setNewBook(req.body)
-   Books.create(newBooks)
+   Books.create(req.body)
    .then((book) => {
       return res.json(book)
    })

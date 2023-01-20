@@ -6,6 +6,7 @@ const {uploadImg, uploadFile} = require('../middleware/upload.middelware')
 
 
 const uploadBook = uploadFile.single('fileBook')
+
 router.post('/upload/file', uploadBook, (req, res) =>{
   try {
     console.log(req.file)
@@ -18,7 +19,7 @@ router.post('/upload/file', uploadBook, (req, res) =>{
 
 
 const uploadCover = uploadImg.single('imgCover')
-router.post('/upload/img', uploadCover, (req, res) =>{
+router.post('/upload/img', verifyToken, uploadCover, (req, res) =>{
   try {
     res.json({fileId: req.file.fileId})
   }
